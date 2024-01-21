@@ -1,3 +1,5 @@
+from colorama import Fore, Style
+
 def menu():
         continuar = 1
         banner()
@@ -21,41 +23,38 @@ def banner():
 
 
 """     
-      print(art)
+      print(f"{Fore.RED}{art}{Style.RESET_ALL}")
 def game():
-        res = input("1: quero ser x\n" + "2: quero ser O \n")
-        if res == 1:
-              jogada = 0
+    res = int(input("1: quero ser X\n" + "2: quero ser O \n"))
+    if res == 1:
+          jogada = 2
+    else:
+        jogada = 1
+    while ganhou() == 0:
+        if jogada % 2 + 1 == 1:
+            print("\nJogador X")
         else:
-            jogada = 1
-        while ganhou() == 0:
-            if jogada%2 + 1 == 1:
-                print("\nJogador X")
+            print("\nJogador O")
+        
+        tabuleiro()
+
+        linha = int(input("\nLinha: "))
+        coluna = int(input("Coluna: "))
+
+        if linha not in {1, 2, 3} or coluna not in {1, 2, 3}:
+            print("Linha ou coluna inválida\n")
+        elif board[linha - 1][coluna - 1] == 0:
+            if (jogada % 2 + 1) == 1:
+                board[linha - 1][coluna - 1] = 1
             else:
-                print("\nJogador O")
-            tabuleiro()
+                board[linha - 1][coluna - 1] = -1
+            jogada += 1  # Incrementa jogada apenas se a jogada foi bem-sucedida
+        else:
+            print("Posição não está vazia")
 
-            linha  = int(input("\nLinha :"))
-            coluna = int(input("Coluna:"))
+        if ganhou():
+            print("Jogador ", jogada % 2 + 1, " ganhou após ", jogada + 1, " rodadas")
 
-            if linha != 1 and linha != 2 and linha != 3:
-                print("Linha inválida\n")
-            elif coluna != 1 and coluna != 2 and coluna != 3:
-                print("Coluna inválida\n")
-            else:      
-                if board[linha-1][coluna-1] == 0:
-                    if(jogada%2+1)==1:  
-                        board[linha-1][coluna-1]=1
-                    else:
-                        board[linha-1][coluna-1]=-1
-                else:
-                    print("Nao esta vazio")
-                    jogada -=1
-
-                if ganhou():
-                    print("Jogador ",jogada%2 + 1," ganhou apos ", jogada+1," rodadas")
-
-                jogada +=1
     
 
 def ganhou():
