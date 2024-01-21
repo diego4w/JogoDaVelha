@@ -1,34 +1,61 @@
 def menu():
         continuar = 1
+        banner()
+        
         while continuar:
                 continuar = int(input("0: sair \n" + "1: jogar novamente \n"))
                 if continuar:
                         game()
                 else:
                     print("Saindo... ")
-                
+def banner():
+      art = """
+                     #      ##       ###      ##              ####       ##              #    #   ######   #        #    #     ##
+           #  #     #   #    #  #              #  #     #  #             #    #   #        #        #    #    #  #
+    ##    #    #   #        #    #             #   #   #    #            #    #   #        #        #    #   #    #
+     #    #    #   #  ###   #    #             #   #   ######             #  #    ####     #        ######   ######
+     #    #    #   #    #   #    #             #   #   #    #             #  #    #        #        #    #   #    #
+     #     #  #     #   #    #  #              #  #    #    #              ##     #        #        #    #   #    #
+ #   #      ##       ###      ##              ####     #    #              ##     ######   ######   #    #   #    #
+  ###
+
+
+"""     
+      print(art)
 def game():
-        jogada = 0
+        res = input("1: quero ser x\n" + "2: quero ser O \n")
+        if res == 1:
+              jogada = 0
+        else:
+            jogada = 1
         while ganhou() == 0:
-            print("\nJogador ", jogada%2 + 1)
+            if jogada%2 + 1 == 1:
+                print("\nJogador X")
+            else:
+                print("\nJogador O")
             tabuleiro()
-            #criar menu para joagador escolher o ou x
+
             linha  = int(input("\nLinha :"))
             coluna = int(input("Coluna:"))
 
-            if board[linha-1][coluna-1] == 0:
-                if(jogada%2+1)==1:  
-                    board[linha-1][coluna-1]=1
+            if linha != 1 and linha != 2 and linha != 3:
+                print("Linha inválida\n")
+            elif coluna != 1 and coluna != 2 and coluna != 3:
+                print("Coluna inválida\n")
+            else:      
+                if board[linha-1][coluna-1] == 0:
+                    if(jogada%2+1)==1:  
+                        board[linha-1][coluna-1]=1
+                    else:
+                        board[linha-1][coluna-1]=-1
                 else:
-                    board[linha-1][coluna-1]=-1
-            else:
-                print("Nao esta vazio")
-                jogada -=1
+                    print("Nao esta vazio")
+                    jogada -=1
 
-            if ganhou():
-                print("Jogador ",jogada%2 + 1," ganhou apos ", jogada+1," rodadas")
+                if ganhou():
+                    print("Jogador ",jogada%2 + 1," ganhou apos ", jogada+1," rodadas")
 
-            jogada +=1
+                jogada +=1
     
 
 def ganhou():
